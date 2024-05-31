@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/output.css">
+    <link rel="stylesheet" href="css/output.css">
     <title>Document</title>
 </head>
 <body>
-    <h1 class="text-xl text">HALOOO</h1>
-    <p class="text-xs">P</p>
+    <div class="w-screen h-screen flex justify-center items-center bg-first">
+        <div class="w-full md:w-1/2 flex flex-col items-center">
+            <div class="w-20 h-20">
+                <img src="/asset/image/manchester-city-fc.png" alt="logo">
+            </div>
+
+            <h1 class="text-second text-center text-2xl font-bold mb-6 mt-6"> Log In </h1>
+
+            <div class="w-3/4 mb-6">
+                <input type="email" name="email" id="email" class="w-full py-4 px-8 bg-slate-200 placeholder:font-medium rounded hover:ring-1 outline-blue-500" placeholder="Username">
+            </div>
+
+            <div class="w-3/4 mb-6">
+                <input type="password" name="password" id="password" class="w-full py-4 px-8 bg-slate-200 placeholder:font-medium rounded hover:ring-1 outline-blue-500 " placeholder="Password">
+            </div>
+
+            <div class="w-3/4 flex flex-row justify-between">
+                <div class=" flex items-center gap-x-1">
+                    <input type="checkbox" name="remember" id="" class=" w-4 h-4  ">
+                    <label for="" class="text-sm text-second">Remember me</label>
+                </div>
+                <div>
+                    <a href="#" class="text-sm text-second hover:text-blue-900">Forgot?</a>
+                </div>
+            </div>
+            <!-- button -->
+            <div class="w-3/4 mt-4">
+                <button type="submit" class="py-4 bg-second w-full rounded text-blue-50 font-bold hover:bg-blue-900"> Log In</button>
+            </div>
+            
+        </div>
+    </div>
 </body>
 </html>

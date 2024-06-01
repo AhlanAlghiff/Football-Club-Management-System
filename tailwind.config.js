@@ -13,6 +13,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", 'sans-serif'],
+        mukta: ["Mukta Malar", 'sans-serif']
       },
     },
   },

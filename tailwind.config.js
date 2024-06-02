@@ -1,5 +1,7 @@
+const withMT = require("@material-tailwind/html/utils/withMT");
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withMT({
   content: ["./src/**/*.{html,js,php}"],
   theme: {
     extend: {
@@ -15,7 +17,10 @@ module.exports = {
         poppins: ["Poppins", 'sans-serif'],
         mukta: ["Mukta Malar", 'sans-serif']
       },
+      plugins: [
+        
+      ],
     },
   },
   plugins: [],
-}
+});

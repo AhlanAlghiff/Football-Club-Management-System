@@ -7,6 +7,13 @@
     <title>FC Management System | Schedules</title>
 </head>
 <body>
+  <?php 
+  include('function.php');
+
+  $query = "SELECT * FROM sesi";
+
+  $result = mysqli_query($conn, $query);
+  ?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
         <div>
             <header class="text-left">
@@ -29,7 +36,7 @@
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="players_data.html" class=" flex items-center w-full ps-6">
+                        <a href="players_data.php" class=" flex items-center w-full ps-6">
                             <span class="fluent--people-team-16-filled"></span>
                             <span class="ps-4">Players</span>
                         </a>
@@ -188,12 +195,16 @@
                   </tr>
                 </thead>
                 <tbody>
+
+                <?php
+                    while ($row = mysqli_fetch_assoc($result)){
+                  ?>
                   <tr>
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex items-center gap-3">
                         <div class="flex flex-col">
                           <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                            07 Januari 2024
+                            <?php echo $row['tanggal']; ?>
                           </p>
                         </div>
                       </div>
@@ -201,25 +212,25 @@
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex flex-col">
                         <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          09:30 AM
+                        <?php echo $row['waktu']; ?>
                         </p>
                       </div>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="w-max">
                         <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          Training
+                        <?php echo $row['jenis_sesi']; ?>
                         </p>
                       </div>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        -
+                      <?php echo $row['lawan']; ?>
                       </p>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        Etihad Stadium
+                      <?php echo $row['lokasi']; ?>
                       </p>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
@@ -247,6 +258,12 @@
                       </div>
                     </td>
                   </tr>
+
+                  <?php 
+                    }
+                    mysqli_close($conn);
+
+                  ?>
                 </tbody>
               </table>
             </div>

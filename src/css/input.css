@@ -4,7 +4,43 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  display: flex;
+  background-color: rgb(229, 231, 235);
+  font-family: Poppins, sans-serif;
+  margin: 0;
+}
+.main-content {
+  position:fixed;
+  left: 300px; /* Width of the sidebar */
+  top: 80px;
+  height: calc(100% - 80px);
+  width: calc(100% - 300px);
+  background-color: #f3f3f3;
+  overflow: auto;
+}
 
+.main-content-players {
+  position:fixed;
+  left: 300px; /* Width of the sidebar */
+  width: calc(100% - 300px);
+  background-color: #f3f3f3;
+  overflow: auto;
+}
+
+.header {
+  max-width: none;
+  position: fixed;
+  top: 0;
+  left: 300px; /* Width of the sidebar */
+  width: calc(100vw - 300px);
+  background-color: white;
+  z-index: 1000; /* Ensures the header is above other elements */
+}
+.active {
+  background-color: var(--tw-bg-opacity) #6CABDD;
+  color: var(--tw-text-opacity) #1C2C5B;
+}
 
 /* Icon Setting */
 .mdi--settings {

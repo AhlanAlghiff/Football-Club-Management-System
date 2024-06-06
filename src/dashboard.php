@@ -1,40 +1,18 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/output.css">
-    <title>Document</title>
-    <style>
-        body {
-            display: flex;
-            background-color: rgb(229, 231, 235);
-            font-family: Poppins, sans-serif;
-            margin: 0;
-        }
-        .main-content {
-            position:fixed;
-            left: 300px; /* Width of the sidebar */
-            top: 80px;
-            height: calc(100% - 80px);
-            width: calc(100% - 300px);
-            background-color: #f3f3f3;
-            overflow: auto;
-        }
-        .header {
-            max-width: none;
-            position: fixed;
-            top: 0;
-            left: 300px; /* Width of the sidebar */
-            width: calc(100vw - 300px);
-            background-color: white;
-            z-index: 1000; /* Ensures the header is above other elements */
-        }
-        .active {
-            background-color: var(--tw-bg-opacity) #6CABDD;
-            color: var(--tw-text-opacity) #1C2C5B;
-        }
-    </style>
+    <title>FC Management System | Dashboard</title>
 </head>
 <body>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
@@ -53,31 +31,31 @@
             <div class="text-left px-4 mt-10">
                 <ul>
                     <li class="flex w-full h-10 rounded-[10px] my-2 bg-first text-second ">
-                        <a href="dashboard.html" class=" flex items-center w-full ps-6">
+                        <a href="dashboard.php" class=" flex items-center w-full ps-6">
                             <span class="mage--dashboard-fill"></span>
                             <span class="ps-4">Dashboard</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="players.html" class=" flex items-center w-full ps-6">
+                        <a href="players_data.html" class=" flex items-center w-full ps-6">
                             <span class="fluent--people-team-16-filled"></span>
                             <span class="ps-4">Players</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="" class=" flex items-center w-full ps-6">
+                        <a href="schedules_data.html" class=" flex items-center w-full ps-6">
                             <span class="ri--football-fill"></span>
                             <span class="ps-4">Training & Matches</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="" class=" flex items-center w-full ps-6 ">
+                        <a href="injury_data.html" class=" flex items-center w-full ps-6 ">
                             <span class="fa6-solid--user-injured"></span>
                             <span class="ps-4">Injured Player</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="" class=" flex items-center w-full ps-6 ">
+                        <a href="presence_data.html" class=" flex items-center w-full ps-6 ">
                             <span class="material-symbols--note"></span>
                             <span class="ps-4">Player Presence</span>
                         </a>
@@ -100,8 +78,8 @@
     <header class="header flex justify-between h-20 bg-white p-4 items-center">
         <div>
             <h3 class="leading-5">
-                Hi <span class="text-second font-semibold">Yujinn</span>!<br>
-                <span class="text-first font-semibold">Admin</span>
+                Hi <span class="text-second font-semibold"><?php echo $_SESSION['name'] ?></span>!<br>
+                <span class="text-first font-semibold"><?php echo $_SESSION['role'] ?></span>
             </h3>
         </div>
         <div class="flex items-center">
@@ -124,8 +102,8 @@
                 </div>
               </div>
             <span class="mdi--settings ml-4"></span>
-            <img src="../asset/image/yujinn.jpg" alt="" class="rounded-full h-10 w-10 ml-2">
-        </div>
+            <img src="../asset/image/<?php echo $_SESSION['image']?>" alt="" class="rounded-full h-10 w-10 ml-2">
+        </div>  
     </header>
 
     <main class="main-content p-10">

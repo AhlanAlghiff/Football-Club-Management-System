@@ -7,6 +7,13 @@
     <title>FC Management System | Players</title>
 </head>
 <body>
+<?php 
+  include('function.php');
+
+  $query = "SELECT * FROM pemain";
+
+  $result = mysqli_query($conn, $query);
+  ?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
         <div>
             <header class="text-left">
@@ -29,13 +36,13 @@
                         </a>
                     </li>
                     <li class="flex w-full h-10 rounded-[10px] my-2 bg-first text-second duration-300">
-                        <a href="players_data.html" class=" flex items-center w-full ps-6">
+                        <a href="players_data.php" class=" flex items-center w-full ps-6">
                             <span class="fluent--people-team-16-filled"></span>
                             <span class="ps-4">Players</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="schedules_data.html" class=" flex items-center w-full ps-6">
+                        <a href="schedules_data.php" class=" flex items-center w-full ps-6">
                             <span class="ri--football-fill"></span>
                             <span class="ps-4">Training & Matches</span>
                         </a>
@@ -190,18 +197,19 @@
                 </tr>
               </thead>
               <tbody>
+              <?php
+                    while ($row = mysqli_fetch_assoc($result)){
+                  ?>
                 <tr>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex items-center gap-3">
-                      <img src="/asset/image/Jude.png"
-                        alt="Vinicius" class="relative inline-block h-20 w-20 !rounded-full object-cover object-center" />
                       <div class="flex flex-col">
                         <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          Jude Bellingham
+                        <?php echo $row['nama']; ?>
                         </p>
                         <p
                           class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                          #5
+                          <?php echo $row['nomor_punggung']; ?>
                         </p>
                       </div>
                     </div>
@@ -209,7 +217,7 @@
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex flex-col">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        29/06/03
+                      <?php echo $row['tanggal_lahir']; ?>
                       </p>
                       <p
                         class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
@@ -220,87 +228,18 @@
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="w-max">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        England
+                      <?php echo $row['kewarganegaraan']; ?>
                       </p>
                     </div>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      1,86 m
+                    <?php echo $row['height']; ?>m
                     </p>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      Midfielder
-                    </p>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <div class="flex flex-row">
-                        <button
-                        class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-green-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        type="button">
-                        <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-4 h-4">
-                            <path
-                              d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
-                            </path>
-                          </svg>
-                        </span>
-                      </button>
-                      <button
-                      class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-red-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button">
-                      <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class="w-4 h-4">
-                          <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1"/>
-                        </svg>
-                      </span>
-                    </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <div class="flex items-center gap-3">
-                      <img src="/asset/image/Vini.png"
-                        alt="Vinicius" class="relative inline-block h-20 w-20 !rounded-full object-cover object-center" />
-                      <div class="flex flex-col">
-                        <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          Vinícius Júnior
-                        </p>
-                        <p
-                          class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                          #7
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <div class="flex flex-col">
-                      <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        12/07/00
-                      </p>
-                      <p
-                        class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                        23 years old
-                      </p>
-                    </div>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <div class="w-max">
-                      <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        Brazil
-                      </p>
-                    </div>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      1,76 m
-                    </p>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      Left Winger
+                    <?php echo $row['posisi']; ?>
                     </p>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
@@ -328,6 +267,11 @@
                     </div>
                   </td>
                 </tr>
+                <?php 
+                    }
+                    mysqli_close($conn);
+
+                  ?>
               </tbody>
             </table>
           </div>

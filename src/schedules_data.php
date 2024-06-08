@@ -77,7 +77,7 @@
     <div class="main-content-players p-10 w-full h-full">
         <div class="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
             <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
-              <div class="flex items-center justify-between gap-8 mb-8">
+              <div class="flex m-4 items-center justify-between gap-8 mb-8">
                 <div>
                   <h5
                     class="block text-3xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">

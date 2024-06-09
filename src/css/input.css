@@ -10,6 +10,16 @@ body {
   font-family: Poppins, sans-serif;
   margin: 0;
 }
+
+input[type="text"],
+input[type="date"],
+textarea {
+    border: 1px solid #D1D5DB; /* Warna garis batas */
+    border-radius: 0.375rem; /* Sudut border */
+    padding: 0.5rem; /* Ruang di sekitar teks */
+    margin-bottom: 1rem; /* Margin bottom untuk elemen form */
+}
+
 .main-content {
   position:fixed;
   left: 300px; /* Width of the sidebar */

@@ -19,7 +19,7 @@
             <header class="text-left">
                 <a href="">
                     <div class="flex p-4 py-4 gap-4 items-center">
-                        <img class="ms-4 w-10" src="../../asset/image/manchester-city-fc.png" alt="">
+                        <img class="ms-4 w-10" src="../asset/image/manchester-city-fc.png" alt="">
                         <div>
                             <h3 class="text-darken font-bold text-[14px] lg:text-[14px] leading-[12px] text-second">Manchester City Management System</h3>
                         </div>
@@ -93,7 +93,7 @@
                   type="button">
                   view all
                 </button>
-                <a href="insert_players.html">
+                <a href="insert_players.php">
                   <button
                     class="flex select-none items-center gap-3 rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button">
@@ -203,14 +203,17 @@
                 <tr>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex items-center gap-3">
-                      <div class="flex flex-col">
-                        <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        <?php echo $row['nama']; ?>
-                        </p>
-                        <p
-                          class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                          <?php echo $row['nomor_punggung']; ?>
-                        </p>
+                      <div class="flex flex-row">
+                        <img class="w-10 h-10 rounded-full" src="../asset/uploaded_img/."<?php echo $row['image'];?> alt="">
+                        <div class="flex flex-col ml-4">
+                          <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                          <?php echo $row['nama']; ?>
+                          </p>
+                          <p
+                            class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
+                            <?php echo $row['nomor_punggung']; ?>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </td>
@@ -234,7 +237,7 @@
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                    <?php echo $row['height']; ?>m
+                    <?php echo $row['height']; ?><p> m</p>
                     </p>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">

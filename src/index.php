@@ -62,15 +62,14 @@ $conn->close();
 
             <form action="index.php" method="post" class="w-3/4 mb-6">
                 <div class="mb-6">
-                    <input type="text" name="username" id="username" class="w-full py-4 px-8 bg-slate-200 placeholder:font-medium rounded hover:ring-1 outline-blue-500" placeholder="Username" required>
+                    <input type="username" name="username" id="username" class="w-full py-4 px-8 bg-slate-200 placeholder:font-medium rounded hover:ring-1 outline-blue-500 " placeholder="Username" required>
                 </div>
-
                 <div class="mb-6">
                     <input type="password" name="password" id="password" class="w-full py-4 px-8 bg-slate-200 placeholder:font-medium rounded hover:ring-1 outline-blue-500 " placeholder="Password" required>
                 </div>
 
                 <div class="flex flex-row justify-between">
-                    <div class=" flex items-center gap-x-1">
+                    <div class="flex items-center gap-x-1">
                         <input type="checkbox" name="remember" id="remember" class=" w-4 h-4  ">
                         <label for="remember" class="text-sm text-second">Remember me</label>
                     </div>

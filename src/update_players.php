@@ -11,7 +11,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $currentPage = 'players_data';
 
-if (isset($_POST['add_player'])) {
+$id = $_GET['edit'];
+
+if (isset($_POST['update_player'])) {
     $playerName = $_POST['playerName'];
     $tanggalLahir = $_POST['tanggalLahir'];
     $negara = $_POST['negara'];
@@ -32,33 +34,26 @@ if (isset($_POST['add_player'])) {
 
     if (empty($playerName) || empty($tanggalLahir) || empty($negara) || empty($tinggiPlayer) || empty($noPunggung) || $position == '' || empty($fileName)) {
         $message = 'Please fill out all required fields.';
+    } elseif (!in_array($fileActualExt, $allowed)) {
+        $message = "You cannot upload files of this type!";
+    } elseif ($fileError !== 0) {
+        $message = "Error uploading your image!";
+    } elseif ($fileSize > 1000000) {
+        $message = "The image is too big!";
     } else {
-        if (in_array($fileActualExt, $allowed)) {
-            if ($fileError === 0) {
-                if ($fileSize < 1000000) {
-                    $fileDestination = '../asset/uploaded_img/' . $fileName;
-                    if (move_uploaded_file($fileTmpName, $fileDestination)) {
-                        $insert = "INSERT INTO pemain(nama, tanggal_lahir, kewarganegaraan, height, posisi, nomor_punggung, image) VALUES(?, ?, ?, ?, ?, ?, ?)";
-                        $stmt = mysqli_prepare($conn, $insert);
-                        mysqli_stmt_bind_param($stmt, 'sssssss', $playerName, $tanggalLahir, $negara, $tinggiPlayer, $position, $noPunggung, $fileName);
+        $fileDestination = '../asset/uploaded_img/' . $fileName;
+        if (move_uploaded_file($fileTmpName, $fileDestination)) {
+            $update = "UPDATE pemain SET nama='$playerName', tanggal_lahir='$tanggalLahir', kewarganegaraan='$negara', 
+                        height='$tinggiPlayer', posisi='$position', nomor_punggung='$noPunggung', image='$fileName' WHERE id_pemain = '$id'";
+            $stmt = mysqli_query($conn, $update);
 
-                        if (mysqli_stmt_execute($stmt)) {
-                            $message = 'Player added successfully, Welcome to our Team!';
-                        } else {
-                            $message = 'Could not add the player';
-                        }
-                        mysqli_stmt_close($stmt);
-                    } else {
-                        $message = "Error uploading your image!";
-                    }
-                } else {
-                    $message = "The image is too big!";
-                }
+            if ($stmt) {
+                $message = 'Player data updated successfully!';
             } else {
-                $message = "Error uploading your image!";
+                $message = 'Could not update the player data: ' . mysqli_error($conn);
             }
         } else {
-            $message = "You cannot upload files of this type!";
+            $message = "Error uploading your image!";
         }
     }
 
@@ -144,18 +139,23 @@ if (isset($_POST['add_player'])) {
             <div class="relative mx-auto mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border w-full max-w-screen-lg">
                 <div class="text-center mb-6">
                     <h5 class="block text-3xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                        Add Players
+                        Update Players
                     </h5>
                     <p class="block mt-1 text-base antialiased font-normal leading-relaxed text-gray-700">
-                        Insert a New Player to the Team
+                        Update Data Player's Information
                     </p>
                 </div>
                 <div class="relative flex flex-col text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-                    <form role="form" action="insert_players.php" method="post" enctype = "multipart/form-data" class="max-w-screen-lg mt-8 mb-2 w-full flex flex-col space-y-4 mx-auto">
+                    <?php
+                        $select = mysqli_query($conn, "SELECT * FROM pemain WHERE id_pemain = '$id'");
+                        while ($row = mysqli_fetch_assoc($select)) {
+                    ?>
+                    <form role="form" action="update_players.php" method="post" enctype = "multipart/form-data" class="max-w-screen-lg mt-8 mb-2 w-full flex flex-col space-y-4 mx-auto">
                         <!-- Row 1 -->
                         <div class="flex flex-col md:flex-row gap-4">
                             <div class="relative h-11 w-full min-w-[200px] mb-2">
                                 <input  placeholder="Enter Player Fullname"
+                                        value="<?php echo $row['nama']; ?> "
                                         name="playerName"
                                         class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100" />
                                 <label
@@ -167,8 +167,9 @@ if (isset($_POST['add_player'])) {
                                 <input
                                   id="date-picker"
                                   name="tanggalLahir"
+                                  value="<?php echo $row['tanggal_lahir']; ?>"
                                   class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                  placeholder=" "
+                                  placeholder="Select Birth Data"
                                   />
                                 <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                                   Select a Birth Date
@@ -178,7 +179,7 @@ if (isset($_POST['add_player'])) {
                         <!-- Row 2 -->
                         <div class="relative h-11 w-full min-w-[200px] mb-2">
                             <input name="negara" placeholder="Enter Cityzenship"
-                                   
+                                    value="<?php echo $row['kewarganegaraan']; ?>"
                                     class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100" />
                             <label
                                    class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
@@ -189,6 +190,7 @@ if (isset($_POST['add_player'])) {
                         <div class="flex flex-col md:flex-row gap-4">
                             <div class="relative h-11 w-full min-w-[200px] mb-2">
                                 <input  placeholder="Enter Height in Meter"
+                                        value="<?php echo $row['height']; ?>"
                                         name="tinggiPlayer"
                                         class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100" />
                                 <label
@@ -198,6 +200,7 @@ if (isset($_POST['add_player'])) {
                             </div>
                             <div class="relative h-11 w-full min-w-[200px] mb-2">
                                 <input  placeholder="Enter Number of Jersey"
+                                        value="<?php echo $row['nomor_punggung']; ?>"
                                         name="noPunggung"
                                         class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100" />
                                 <label
@@ -206,11 +209,11 @@ if (isset($_POST['add_player'])) {
                                 </label>
                             </div>
                             <div class="relative h-11 w-full min-w-[200px] mb-2">   
-                                <label class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                                <label  class="after:content[''] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                                     Position
                                 </label>
                                 <select name="position" class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
-                                    <option value="">--Select position--</option>
+                                    <option value="<?php echo $row['posisi']; ?>" selected> </option>
                                     <option value="Striker">Striker</option>
                                     <option value="Forward">Forward</option>
                                     <option value="Midfielder">Midfielder</option>
@@ -225,11 +228,12 @@ if (isset($_POST['add_player'])) {
                         </div>
                         <div class="relative h-11 w-full min-w-[200px]">
                             <button class="flex w-full justify-center items-center select-none gap-3 rounded-lg bg-first py-2 px-4 mt-6 text-center align-middle text-xs font-bold text-white shadow-md shadow-gray-900/10 transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" 
-                                type="submit" name="add_player">
-                                Add Players
+                                type="submit" name="update_player">
+                                Update Players
                             </button>
                         </div>
                     </form>
+                    <?php }; ?>
                 </div>
             </div>
         </div>

@@ -74,9 +74,10 @@
         </footer>
     </nav>
 
-    <div class="main-content-players p-10 w-full h-full">
-      <div class="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
-          <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
+
+    <div class="main-content-players p-10 flex-grow overflow-auto ">
+      <div class="relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
+          <div class="relative mx-4 mt-4 text-gray-700 bg-white rounded-none bg-clip-border">
             <div class="flex m-4 items-center justify-between gap-8 mb-8">
               <div>
                 <h5
@@ -88,11 +89,6 @@
                 </p>
               </div>
               <div class="flex flex-col gap-2 shrink-0 sm:flex-row">
-                <button
-                  class="select-none rounded-lg border border-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-first transition-all hover:text-second hover:border-second focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  type="button">
-                  view all
-                </button>
                 <a href="insert_players.php">
                   <button
                     class="flex select-none items-center gap-3 rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -109,24 +105,10 @@
               </div>
             </div>
             <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
-              <div class="flex flex-row mb-1 sm:mb-0">
+              <div class="mb-1 sm:mb-0">
                     <div class="relative">
                         <select
-                            class="appearance-none h-full rounded-l border block  w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                        </select>
-                        <div
-                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative">
-                        <select
-                            class="appearance-none h-full rounded-r border-t border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-r focus:bg-white focus:border-gray-500 cursor-pointer">
+                            class="appearance-none h-full rounded-md border-t border-r border-b border-l block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-r focus:bg-white focus:border-gray-500 cursor-pointer">
                             <option>Position</option>
                             <option>Striker</option>
                             <option>Midfielder</option>
@@ -160,8 +142,10 @@
               </div>
             </div>
           </div>
-          <div class="p-6 px-0 overflow-scroll">
-            <table class="w-full mt-4 text-left table-auto min-w-max">
+          <div class="relative flex flex-col ">
+            <div class=" mx-4 mt-4  relative">
+              <!-- Tabel Anda -->
+              <table class="w-full mt-4 text-left table-auto min-w-max ">
               <thead>
                 <tr>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
@@ -181,7 +165,7 @@
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Height
+                      Height (m)
                     </p>
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
@@ -204,14 +188,14 @@
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex items-center gap-3">
                       <div class="flex flex-row">
-                        <img class="w-10 h-10 rounded-full" src="../asset/uploaded_img/."<?php echo $row['image'];?> alt="">
-                        <div class="flex flex-col ml-4">
+                      <img class="w-20 h-20 rounded-full" src="<?php echo '../asset/uploaded_img/' . $row['image']; ?>" alt="">
+                        <div class="flex flex-col justify-center ml-4">
                           <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          <?php echo $row['nama']; ?>
+                            <?php echo $row['nama']; ?>
                           </p>
                           <p
                             class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                            <?php echo $row['nomor_punggung']; ?>
+                            #<?php echo $row['nomor_punggung']; ?>
                           </p>
                         </div>
                       </div>
@@ -222,9 +206,17 @@
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
                       <?php echo $row['tanggal_lahir']; ?>
                       </p>
-                      <p
-                        class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                        20 years old
+
+                      <!-- hitung tanggal lahir -->
+                      <?php
+                        // Tanggal lahir pemain (contoh)
+                        $playerBirthDate = $row['tanggal_lahir'];
+                        // Hitung usia pemain
+                        $playerAge = date_diff(date_create($playerBirthDate), date_create('today'))->y;
+                      ?>
+                      
+                      <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
+                        <?php echo $playerAge . " years old"; ?>
                       </p>
                     </div>
                   </td>
@@ -237,7 +229,7 @@
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                    <?php echo $row['height']; ?><p> m</p>
+                    <?php echo $row['height']; ?>
                     </p>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
@@ -247,26 +239,24 @@
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex flex-row">
-                        <button
-                        class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-green-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        type="button">
-                        <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-4 h-4">
-                            <path
-                              d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
-                            </path>
-                          </svg>
-                        </span>
-                      </button>
-                      <button
-                      class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-red-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button">
-                      <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class="w-4 h-4">
-                          <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1"/>
-                        </svg>
-                      </span>
-                    </button>
+                      <a href="update_players.php?edit=<?php echo $row['id_pemain']; ?>">
+                        <button  class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-green-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                          <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-4 h-4">
+                              <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"/>
+                            </svg>
+                          </span>
+                        </button>
+                      </a>
+                      <a href="delete_players.php?delete=<?php echo $row['id_pemain']; ?>">
+                        <button class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-red-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                          <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class="w-4 h-4">
+                              <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1"/>
+                            </svg>
+                          </span>
+                        </button>
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -280,20 +270,9 @@
           </div>
           <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
             <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-              Page 1 of 10
+              Page 1 of 1
             </p>
-            <div class="flex gap-2">
-              <button
-                class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="button">
-                Previous
-              </button>
-              <button
-                class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="button">
-                Next
-              </button>
-            </div>
+          </div>
           </div>
         </div>
     </div>

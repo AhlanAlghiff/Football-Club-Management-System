@@ -7,6 +7,15 @@
     <title>FC Management System | Presecne</title>
 </head>
 <body>
+<?php
+include 'function.php'; // Menyertakan file koneksi database
+
+$sql = "SELECT kehadiran.id_kehadiran ,kehadiran.status_kehadiran, kehadiran.catatan, pemain.nama, sesi.tanggal, sesi.jenis_sesi
+        FROM kehadiran
+        JOIN pemain ON kehadiran.id_pemain = pemain.id_pemain
+        JOIN sesi ON kehadiran.id_sesi = sesi.id_sesi";
+$result = $conn->query($sql);
+?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
         <div>
             <header class="text-left">
@@ -156,6 +165,9 @@
             <div class="p-6 px-0 overflow-scroll">
               <table class="w-full mt-4 text-left table-auto min-w-max">
                 <thead>
+                  <?php
+                    if ($result->num_rows > 0) {
+                  ?>
                   <tr>
                     <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                       <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
@@ -190,12 +202,15 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <?php
+                   while($row = $result->fetch_assoc()) {
+                    ?>
                   <tr>
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex items-center gap-3">
                         <div class="flex flex-col">
                           <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                            Jude Bellingham
+                          <?php echo $row['nama']; ?>
                           </p>
                         </div>
                       </div>
@@ -203,52 +218,57 @@
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex flex-col">
                         <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                            20/01/2024
+                        <?php echo $row['tanggal']; ?>
                         </p>
                       </div>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="w-max">
                         <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                           Training
+                        <?php echo $row['jenis_sesi']; ?>
                         </p>
                       </div>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          Injury
+                      <?php echo $row['status_kehadiran']; ?>
                       </p>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                         Bellingham has been ill for 2 days due to injury
+                      <?php echo $row['catatan']; ?>
                       </p>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex flex-row">
-                          <button
-                          class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-green-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                          type="button">
-                          <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                      <a href="update_players.php?edit=<?php echo $row['id_kehadiran']; ?>">
+                        <button  class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-green-400 hover:text-green-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                          <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-4 h-4">
-                              <path
-                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
-                              </path>
+                              <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"/>
                             </svg>
                           </span>
                         </button>
-                        <button
-                        class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:text-red-500 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        type="button">
+                      </a>
+                      <a href="delete_presence.php?id=<?php echo $row['id_kehadiran']; ?>" onclick="return confirm('anda yakin ingin mengahapus data?');">
+                      <button class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-red-400 hover:text-red-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
                         <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class="w-4 h-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class=" w-4 h-4">
                             <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1"/>
                           </svg>
                         </span>
                       </button>
+                      </a>
                       </div>
                     </td>
                   </tr>
+                  <?php
+                }
+            
+            }
+
+            $conn->close();
+            ?>
                 </tbody>
               </table>
             </div>

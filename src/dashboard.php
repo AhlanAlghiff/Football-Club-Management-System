@@ -1,4 +1,6 @@
 <?php
+include('function.php');
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -117,7 +119,19 @@ if (!isset($_SESSION['user_id'])) {
         <div class="flex w-full">
             <div class="flex justify-between items-center content-center px-4 py-2 m-4  w-1/3 h-28 bg-fourth text-white rounded-md drop-shadow-lg shadow-transparent cursor-pointer duration-300 hover:bg-yellow-600">
                 <div class="ps-4">
-                    <h1 class="flex text-3xl font-bold justify-center">25</h1>
+                <?php
+                    // Query untuk mengambil jumlah pemain dari tabel pemain
+                    $query = "SELECT COUNT(*) AS total_players FROM pemain";
+                    // Eksekusi query
+                    $result = mysqli_query($conn, $query);
+                    // Ambil hasil query
+                    $row = mysqli_fetch_assoc($result);
+                    $totalPlayers = $row['total_players'];
+                    // Tampilkan hasilnya
+                    echo "<h1 class='flex text-3xl font-bold justify-center'>$totalPlayers</h1>";
+                    // Tutup koneksi
+                    mysqli_close($conn);
+                    ?>
                     <h1 class="text-lg">All Players</h1>
                 </div>
                 <div class="pr-4 ">

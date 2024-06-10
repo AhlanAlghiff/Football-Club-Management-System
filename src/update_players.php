@@ -13,6 +13,7 @@ $currentPage = 'players_data';
 
 $id = $_GET['edit'];
 
+
 if (isset($_POST['update_player'])) {
     $playerName = $_POST['playerName'];
     $tanggalLahir = $_POST['tanggalLahir'];
@@ -21,6 +22,7 @@ if (isset($_POST['update_player'])) {
     $noPunggung = $_POST['noPunggung'];
     $position = $_POST['position'];
 
+    // ngambil image
     $file = $_FILES['file'];
     $fileName = $file['name'];
     $fileTmpName = $file['tmp_name'];
@@ -72,7 +74,7 @@ if (isset($_POST['update_player'])) {
     <link rel="stylesheet" href="css/output.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <title>FC Management System | Add Players</title>
+    <title>FC Management System | Update Players</title>
 </head>
 <body>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
@@ -150,7 +152,7 @@ if (isset($_POST['update_player'])) {
                         $select = mysqli_query($conn, "SELECT * FROM pemain WHERE id_pemain = '$id'");
                         while ($row = mysqli_fetch_assoc($select)) {
                     ?>
-                    <form role="form" action="update_players.php" method="post" enctype = "multipart/form-data" class="max-w-screen-lg mt-8 mb-2 w-full flex flex-col space-y-4 mx-auto">
+                    <form role="form" action="" method="post" enctype = "multipart/form-data" class="max-w-screen-lg mt-8 mb-2 w-full flex flex-col space-y-4 mx-auto">
                         <!-- Row 1 -->
                         <div class="flex flex-col md:flex-row gap-4">
                             <div class="relative h-11 w-full min-w-[200px] mb-2">
@@ -213,7 +215,7 @@ if (isset($_POST['update_player'])) {
                                     Position
                                 </label>
                                 <select name="position" class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
-                                    <option value="<?php echo $row['posisi']; ?>" selected> </option>
+                                    <option value="<?php echo $row['posisi']; ?>" selected>--Select Position--</option>
                                     <option value="Striker">Striker</option>
                                     <option value="Forward">Forward</option>
                                     <option value="Midfielder">Midfielder</option>

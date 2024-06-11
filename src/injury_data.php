@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/output.css">
-    <title>FC Management System | Players</title>
+    <title>FC Management System | Injury</title>
 </head>
 <body>
-<?php 
-  include('function.php');
+<?php
+include 'function.php'; // Menyertakan file koneksi database
 
-  $query = "SELECT * FROM pemain";
-
-  $result = mysqli_query($conn, $query);
-  ?>
+$sql = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+FROM cedera c
+JOIN pemain p ON c.id_pemain = p.id_pemain;
+";
+$result = $conn->query($sql);
+?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
         <div>
             <header class="text-left">
@@ -35,8 +37,8 @@
                             <span class="ps-4">Dashboard</span>
                         </a>
                     </li>
-                    <li class="flex w-full h-10 rounded-[10px] my-2 bg-first text-second duration-300">
-                        <a href="players_data.php" class=" flex items-center w-full ps-6">
+                    <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
+                        <a href="schedules_data.php" class=" flex items-center w-full ps-6">
                             <span class="fluent--people-team-16-filled"></span>
                             <span class="ps-4">Players</span>
                         </a>
@@ -47,7 +49,7 @@
                             <span class="ps-4">Training & Matches</span>
                         </a>
                     </li>
-                    <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
+                    <li class="flex w-full h-10 rounded-[10px] my-2 bg-first text-second duration-300">
                         <a href="injury_data.php" class=" flex items-center w-full ps-6 ">
                             <span class="fa6-solid--user-injured"></span>
                             <span class="ps-4">Injured Player</span>
@@ -82,14 +84,14 @@
               <div>
                 <h5
                   class="block text-3xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                  Players List
+                  Injury Players List
                 </h5>
                 <p class="block mt-1 text-base antialiased font-normal leading-relaxed text-gray-700">
-                  See information about all players
+                  See information about all Injury Players
                 </p>
               </div>
               <div class="flex flex-col gap-2 shrink-0 sm:flex-row">
-                <a href="insert_players.php">
+                <a href="insert_injury.php">
                   <button
                     class="flex select-none items-center gap-3 rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button">
@@ -99,7 +101,7 @@
                         d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z">
                       </path>
                     </svg>
-                    Add Players
+                    Add Injury Player
                   </button>
                 </a>
               </div>
@@ -107,22 +109,22 @@
             <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
               <div class="mb-1 sm:mb-0">
                     <div class="relative">
-                        <?php
+                          <?php
                             include('function.php');
 
                             // Ambil nilai posisi yang dipilih dari dropdown menu
-                            if(isset($_GET['position'])) {
-                                $selectedPosition = $_GET['position'];
+                            if(isset($_GET['Recovery_status'])) {
+                                $selectedrecovery_status = $_GET['Recovery_status'];
                             } else {
                                 // Default, jika tidak ada posisi yang dipilih, tampilkan semua pemain
-                                $selectedPosition = "all";
+                                $selectedrecovery_status = "all";
                             }
 
-                            // Query SQL untuk mengambil data pemain berdasarkan posisi yang dipilih
-                            if ($selectedPosition == "all") {
-                                $query = "SELECT * FROM pemain";
+                            // Query SQL untuk mengambil data cedera berdasarkan posisi yang dipilih
+                            if ($selectedrecovery_status == "all") {
+                                $query = "SELECT * FROM cedera";
                             } else {
-                                $query = "SELECT * FROM pemain WHERE posisi = '$selectedPosition'";
+                                $query = "SELECT * FROM cedera WHERE jenis_cedera = '$selectedrecovery_status'";
                             }
 
                             $result = mysqli_query($conn, $query);
@@ -130,12 +132,11 @@
                         <select
                             onchange="location = this.value;"
                             class="appearance-none h-full rounded-md border-t border-r border-b border-l block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-r focus:bg-white focus:border-gray-500 cursor-pointer">
-                            <option value="">Position</option>
-                            <option value="players_data.php?position=all">All Position</option>
-                            <option value="players_data.php?position=Forward">Forward</option>
-                            <option value="players_data.php?position=Midfielder">Midfielder</option>
-                            <option value="players_data.php?position=Defender">Defender</option>
-                            <option value="players_data.php?position=Goalkeeper">Goalkeeper</option>
+                            <option value="">Recovery Status</option>
+                            <option value="injury_data.php?Recovery_status=all">Recovery Status</option>
+                            <option value="injury_data.php?Recovery_status=In Recovery">In Recovery</option>
+                            <option value="injury_data.php?Recovery_status=Recovered">Recovered</option>
+                            <option value="injury_data.php?Recovery_status=Not Recovery">Not Recovery</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -169,55 +170,50 @@
               <!-- Tabel Anda -->
               <table class="w-full mt-4 text-left table-auto min-w-max ">
               <thead>
+                <?php
+                    if ($result->num_rows > 0) {
+                      while($row = $result->fetch_assoc()) {
+                  ?>
                 <tr>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Players
+                      Player Name
                     </p>
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Date of Birth
+                      Date
                     </p>
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Citizenship
+                      Injury Information
                     </p>
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Height (m)
+                      Medical Treatment
                     </p>
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Position
+                      Recovery Status
                     </p>
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                    Action
+                      Action
                     </p>
                   </th>
                 </tr>
               </thead>
               <tbody>
-              <?php
-                    while ($row = mysqli_fetch_assoc($result)){
-                  ?>
-                <tr>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex items-center gap-3">
                       <div class="flex flex-row">
-                      <img class="w-20 h-20 rounded-full" src="<?php echo '../asset/uploaded_img/' . $row['image']; ?>" alt="">
                         <div class="flex flex-col justify-center ml-4">
                           <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                            <?php echo $row['nama']; ?>
-                          </p>
-                          <p
-                            class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                            #<?php echo $row['nomor_punggung']; ?>
+                            <?php echo $row['nama_pemain']; ?>
                           </p>
                         </div>
                       </div>
@@ -226,42 +222,30 @@
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex flex-col">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      <?php echo $row['tanggal_lahir']; ?>
-                      </p>
-
-                      <!-- hitung tanggal lahir -->
-                      <?php
-                        // Tanggal lahir pemain (contoh)
-                        $playerBirthDate = $row['tanggal_lahir'];
-                        // Hitung usia pemain
-                        $playerAge = date_diff(date_create($playerBirthDate), date_create('today'))->y;
-                      ?>
-                      
-                      <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                        <?php echo $playerAge . " years old"; ?>
+                      <?php echo $row['tanggal_cedera']; ?>
                       </p>
                     </div>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="w-max">
                       <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      <?php echo $row['kewarganegaraan']; ?>
+                      <?php echo $row['jenis_cedera']; ?>
                       </p>
                     </div>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                    <?php echo $row['height']; ?>
+                    <?php echo $row['tindakan_medis']; ?>
                     </p>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                    <?php echo $row['posisi']; ?>
+                    <?php echo $row['status_pemulihan']; ?>
                     </p>
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex flex-row">
-                      <a href="update_players.php?edit=<?php echo $row['id_pemain']; ?>">
+                      <a href="update_injury.php?edit=<?php echo $row['id_cedera']; ?>">
                         <button  class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-green-400 hover:text-green-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
                           <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-4 h-4">
@@ -270,7 +254,7 @@
                           </span>
                         </button>
                       </a>
-                      <button onclick="confirmDelete(<?php echo $row['id_pemain']; ?>)"
+                      <button onclick="confirmDelete(<?php echo $row['id_cedera']; ?>)"
                         class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-red-400 hover:text-red-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
                         <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class=" w-4 h-4">
@@ -281,12 +265,14 @@
                     </div>
                   </td>
                 </tr>
-                <?php 
-                    }
-                    mysqli_close($conn);
-
-                  ?>
               </tbody>
+              <?php
+                }
+            
+            }
+
+            $conn->close();
+            ?>
             </table>
           </div>
           <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
@@ -301,7 +287,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-function confirmDelete(id) {
+function confirmDelete(id) {  
     Swal.fire({
         title: 'Are you sure?',
         text: "This action cannot be undone!",
@@ -314,21 +300,31 @@ function confirmDelete(id) {
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'delete_players.php?delete=' + id;
+            window.location.href = 'delete_injury.php?delete=' + id;
         }
     });
 }
 </script>
 
 <script>
-    function searchPlayers() {
+    function searchInjury() {
         // Ambil nilai pencarian dari input
         var searchValue = document.getElementById("searchInput").value;
 
-        // Redirect ke halaman players_data.php dengan parameter pencarian
-        window.location.href = "players_data.php?search=" + searchValue;
+        // Redirect ke halaman injury_data.php dengan parameter pencarian
+        window.location.href = "injury_data.php?search=" + searchValue;
     }
 </script>
 
 
 </html>
+
+
+        <div>
+            <p>Nama Pemain: <?php echo $row['nama_pemain']; ?></p>
+            <p>Tanggal Cedera: <?php echo $row['tanggal_cedera']; ?></p>
+            <p>Jenis Cedera: <?php echo $row['jenis_cedera']; ?></p>
+            <p>Tindakan Medis: <?php echo $row['tindakan_medis']; ?></p>
+            <p>Status Pemulihan: <?php echo $row['status_pemulihan']; ?></p>
+        </div>
+

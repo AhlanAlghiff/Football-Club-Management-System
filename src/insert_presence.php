@@ -41,13 +41,13 @@
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="injury_data.html" class=" flex items-center w-full ps-6 ">
+                        <a href="injury_data.php" class=" flex items-center w-full ps-6 ">
                             <span class="fa6-solid--user-injured"></span>
                             <span class="ps-4">Injured Player</span>
                         </a>
                     </li>
                     <li class="flex  w-full h-10 rounded-[10px] my-2  bg-first text-second ">
-                        <a href="presence_data.html" class=" flex items-center w-full ps-6 ">
+                        <a href="presence_data.php" class=" flex items-center w-full ps-6 ">
                             <span class="material-symbols--note"></span>
                             <span class="ps-4">Player Presence</span>
                         </a>
@@ -56,7 +56,7 @@
             </div>
         </div>
         <footer class="text-center">
-            <a href="index.html">
+            <a href="index.php">
                 <button class="w-full h-10 rounded-[10px] bg-white text-[#878787] hover:bg-red-400 hover:text-second duration-300">
                     <div class="  flex items-center justify-center p-0 m-0 ">
                         <span class="majesticons--logout"></span>
@@ -109,7 +109,7 @@
                             <button type="submit" class="select-none rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                                 Add Player
                             </button>
-                            <a href="injury_data.html" class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            <a href="injury_data.php" class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                                 Cancel
                             </a>
                         </div>

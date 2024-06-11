@@ -27,7 +27,7 @@
                         <div>
                             <h3 class="text-darken font-bold text-[14px] lg:text-[14px] leading-[12px] text-second">Manchester City Management System</h3>
                         </div>
-                    </div>
+                    </div>xmlns
                 </a>
                 <!-- <hr> -->
             </header>
@@ -45,20 +45,20 @@
                             <span class="ps-4">Players</span>
                         </a>
                     </li>
-                    <li class="flex  w-full h-10 rounded-[10px] my-2  bg-first text-second ">
+                    <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
                         <a href="schedules_data.php" class=" flex items-center w-full ps-6">
                             <span class="ri--football-fill"></span>
                             <span class="ps-4">Training & Matches</span>
                         </a>
                     </li>
-                    <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="injury_data.html" class=" flex items-center w-full ps-6 ">
+                    <li class="flex  w-full h-10 rounded-[10px] my-2  bg-first text-second ">
+                        <a href="injury_data.php" class=" flex items-center w-full ps-6 ">
                             <span class="fa6-solid--user-injured"></span>
                             <span class="ps-4">Injured Player</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="presence_data.html" class=" flex items-center w-full ps-6 ">
+                        <a href="presence_data.php" class=" flex items-center w-full ps-6 ">
                             <span class="material-symbols--note"></span>
                             <span class="ps-4">Player Presence</span>
                         </a>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <footer class="text-center">
-            <a href="index.html">
+            <a href="index.php">
                 <button class="w-full h-10 rounded-[10px] bg-white text-[#878787] hover:bg-red-400 hover:text-second duration-300">
                     <div class="  flex items-center justify-center p-0 m-0 ">
                         <span class="majesticons--logout"></span>
@@ -83,42 +83,58 @@
                 <!-- Konten form untuk menambahkan pemain yang cedera -->
                 <div class="p-6">
                     <h2 class="block text-3xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                        Add Training or Matches
+                        Add Injured Player
                     </h2>
                     <p class="block mt-1 text-base antialiased font-normal leading-relaxed text-gray-700 mb-6">
-                        Insert a New Team Schedules
+                        Insert a New Injured Player
                     </p>
-                    <form action="" method="post">
+                    <form action="injury_data.php" method="post">
                         <div class="mb-4">
-                            <label for="schedules_date" class="block text-sm font-medium text-gray-700">Date</label>
-                            <input type="date" id="schedules_date" name="schedules_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <label for="injury_date" class="block text-sm font-medium text-gray-700">Date of Injury</label>
+                            <input type="date" id="injury_date" name="injury_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
                         <div class="mb-4">
-                            <label for="schedules_time" class="block text-sm font-medium text-gray-700">Time</label>
-                            <input type="time" id="schedules_time" name="schedules_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <label for="injury_date" class="block text-sm font-medium text-gray-700">Date of Injury</label>
+                            <input type="date" id="injury_date" name="injury_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
                         <div class="mb-4">
-                            <label for="lokasi" class="block text-sm font-medium text-gray-700">Location</label>
-                            <input type="text" id="lokasi" name="lokasi" class="mt-1 block w-full" placeholder="Insert the Location" rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <label for="injury_info" class="block text-sm font-medium text-gray-700">Injury Information</label>
+                            <textarea id="injury_info" name="injury_info" rows="3" placeholder="Insert Injury Information" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
                         </div>
                         <div class="mb-4">
-                            <label for="lawan" class="block text-sm font-medium text-gray-700">Opponent</label>
-                            <input type="text" id="lawan" name="lawan" class="mt-1 block w-full" placeholder="Insert the Opponent or -" rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <label for="medical_treatment" class="block text-sm font-medium text-gray-700">Medical Treatment</label>
+                            <input type="text" id="medical_treatment" name="medical_treatment" placeholder="Insert Medical Treatment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
                         <div class="mb-4">
-                            <label for="jenis_sesi" class="block text-sm font-medium text-gray-700">Session Type</label>
-                            <select id="jenis_sesi" name="jenis_sesi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                                <option value="Training">Training</option>
-                                <option value="Match">Match</option>
+                            <label for="recovery_status" class="block text-sm font-medium text-gray-700">Recovery Status</label>
+                            <?php
+                                $sql = "SELECT id_pemain, nama FROM pemain";
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                    // Output data dari setiap baris
+                                    while($row = $result->fetch_assoc()) {
+                            ?>
+                            <select id="recovery_status" name="recovery_status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            . "'>" . $row["nama"] .
+                                <option value=""><?php $row["id_pemain"] ?></option>
+                                <option value="Recovered">Recovered</option>
+                                <option value="Not Recovering">Not Recovering</option>
                             </select>
+                            <?php
+                                            }
+                                } else {
+                                    echo "Tidak ada pemain yang tersedia.";
+                                }
+                            ?>
                         </div>
                         <div class="flex items-center justify-between">
-                            <button type="submit" value="Add Session" class="select-none rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                                Add Schedules
+                            <button type="submit" class="select-none rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                Add Player
                             </button>
-                            <a href="schedules_data.php" class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            <a href="injury_data.php" class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                                 Cancel
                             </a>
+                            <img src="../asset/uploaded_img/" alt="">
                         </div>
                     </form>
                 </div>

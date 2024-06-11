@@ -110,13 +110,13 @@ if (isset($_POST['update_player'])) {
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="injury_data.html" class="flex items-center w-full ps-6">
+                        <a href="injury_data.php" class="flex items-center w-full ps-6">
                             <span class="fa6-solid--user-injured"></span>
                             <span class="ps-4">Injured Player</span>
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="presence_data.html" class="flex items-center w-full ps-6">
+                        <a href="presence_data.php" class="flex items-center w-full ps-6">
                             <span class="material-symbols--note"></span>
                             <span class="ps-4">Player Presence</span>
                         </a>
@@ -125,7 +125,7 @@ if (isset($_POST['update_player'])) {
             </div>
         </div>
         <footer class="text-center">
-            <a href="index.html">
+            <a href="index.php">
                 <button class="w-full h-10 rounded-[10px] bg-white text-[#878787] hover:bg-red-400 hover:text-second duration-300">
                     <div class="flex items-center justify-center p-0 m-0">
                         <span class="majesticons--logout"></span>

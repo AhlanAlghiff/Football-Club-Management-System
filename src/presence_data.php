@@ -240,8 +240,13 @@ $result = $conn->query($sql);
                       </p>
                     </td>
                     <td class="p-4 border-b border-blue-gray-50">
+<<<<<<< HEAD
                     <div class="flex flex-row">
                       <a href="update_presence.php?edit=<?php echo $row['id_kehadiran']; ?>">
+=======
+                      <div class="flex flex-row">
+                      <a href="update_players.php?edit=<?php echo $row['id_kehadiran']; ?>">
+>>>>>>> f9e2196b06c059538a56ad3d3d9c86fcc2fbb49f
                         <button  class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-green-400 hover:text-green-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
                           <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-4 h-4">
@@ -250,16 +255,27 @@ $result = $conn->query($sql);
                           </span>
                         </button>
                       </a>
+<<<<<<< HEAD
                       <button onclick="confirmDelete(<?php echo $row['id_kehadiran']; ?>)"
                         class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-red-400 hover:text-red-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+=======
+                      <a href="delete_presence.php?id=<?php echo $row['id_kehadiran']; ?>" onclick="return confirm('anda yakin ingin mengahapus data?');">
+                      <button class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase transition-all text-red-400 hover:text-red-700 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+>>>>>>> f9e2196b06c059538a56ad3d3d9c86fcc2fbb49f
                         <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor" aria-hidden="true" class=" w-4 h-4">
                             <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1"/>
                           </svg>
                         </span>
                       </button>
+<<<<<<< HEAD
                     </div>
                   </td>
+=======
+                      </a>
+                      </div>
+                    </td>
+>>>>>>> f9e2196b06c059538a56ad3d3d9c86fcc2fbb49f
                   </tr>
                   <?php
                 }

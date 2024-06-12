@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2024 at 03:50 PM
+-- Generation Time: Jun 12, 2024 at 03:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -36,6 +36,15 @@ CREATE TABLE `cedera` (
   `status_pemulihan` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cedera`
+--
+
+INSERT INTO `cedera` (`id_cedera`, `id_pemain`, `tanggal_cedera`, `jenis_cedera`, `tindakan_medis`, `status_pemulihan`) VALUES
+(1, 19, '2024-06-10', 'Knee Injury', 'Knee Reduction', 'In Recovery'),
+(2, 24, '2024-06-13', 'Patah lengan', 'Operasi tulang', 'Not-Recovering'),
+(3, 27, '2024-06-21', 'Sakit kulit', 'Skin Treatment', 'Not-Recovery');
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +59,15 @@ CREATE TABLE `kehadiran` (
   `catatan` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `kehadiran`
+--
+
+INSERT INTO `kehadiran` (`id_kehadiran`, `id_sesi`, `id_pemain`, `status_kehadiran`, `catatan`) VALUES
+(1, 1, 19, 'Sickness/Injury', 'Hadir'),
+(6, 1, 19, 'Sickness/Injury', 'Nafilah Ramadhani'),
+(12, 1, 27, 'No-Information', 'asasd');
+
 -- --------------------------------------------------------
 
 --
@@ -61,10 +79,22 @@ CREATE TABLE `pemain` (
   `nama` varchar(100) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `kewarganegaraan` varchar(255) DEFAULT NULL,
-  `height` int(11) DEFAULT NULL,
+  `height` float DEFAULT NULL,
   `posisi` varchar(50) DEFAULT NULL,
-  `nomor_punggung` int(11) DEFAULT NULL
+  `nomor_punggung` int(11) DEFAULT NULL,
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pemain`
+--
+
+INSERT INTO `pemain` (`id_pemain`, `nama`, `tanggal_lahir`, `kewarganegaraan`, `height`, `posisi`, `nomor_punggung`, `image`) VALUES
+(19, 'Erling Haaland    ', '2000-07-21', 'Norway', 1.94, 'Forward', 9, 'Haaland.png'),
+(20, 'Kevin De Bruyne    ', '1991-06-28', 'Belgium', 1.81, 'Midfielder', 17, 'KDB.png'),
+(21, 'Jack Grealish', '1995-09-10', 'England', 1.75, 'Midfielder', 10, 'jackgrealish.png'),
+(24, 'Julián Álvarez', '2000-01-31', 'Argentine', 1.7, 'Forward', 19, 'alvarez.png'),
+(27, 'Jeremy Doku  ', '2002-05-27', 'Belgium', 1.71, 'Midfielder', 11, 'doku.png');
 
 -- --------------------------------------------------------
 
@@ -80,6 +110,15 @@ CREATE TABLE `sesi` (
   `lawan` varchar(100) DEFAULT NULL,
   `lokasi` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sesi`
+--
+
+INSERT INTO `sesi` (`id_sesi`, `tanggal`, `waktu`, `jenis_sesi`, `lawan`, `lokasi`) VALUES
+(1, '2024-06-19', '09:00:00', 'Training', '-', 'Etihad Stadium'),
+(18, '2024-06-05', '09:30:00', 'Match', 'Barcelona FC', 'Etihad Stadium'),
+(20, '2024-06-02', '03:30:00', 'Match', 'Manchester United', 'Old Trafford');
 
 -- --------------------------------------------------------
 
@@ -148,25 +187,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cedera`
 --
 ALTER TABLE `cedera`
-  MODIFY `id_cedera` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cedera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kehadiran`
 --
 ALTER TABLE `kehadiran`
-  MODIFY `id_kehadiran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kehadiran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `pemain`
 --
 ALTER TABLE `pemain`
-  MODIFY `id_pemain` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pemain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `sesi`
 --
 ALTER TABLE `sesi`
-  MODIFY `id_sesi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_sesi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`

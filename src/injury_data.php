@@ -7,15 +7,17 @@
     <title>FC Management System | Injury</title>
 </head>
 <body>
-<?php
-include 'function.php'; // Menyertakan file koneksi database
 
-$sql = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
-FROM cedera c
-JOIN pemain p ON c.id_pemain = p.id_pemain;
-";
-$result = $conn->query($sql);
-?>
+<?php 
+  include('function.php');
+
+  $sql = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+  FROM cedera c
+  JOIN pemain p ON c.id_pemain = p.id_pemain;";
+
+    $result = mysqli_query($conn, $sql);
+
+    ?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
         <div>
             <header class="text-left">
@@ -38,7 +40,7 @@ $result = $conn->query($sql);
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="schedules_data.php" class=" flex items-center w-full ps-6">
+                        <a href="players_data.php" class=" flex items-center w-full ps-6">
                             <span class="fluent--people-team-16-filled"></span>
                             <span class="ps-4">Players</span>
                         </a>
@@ -110,8 +112,6 @@ $result = $conn->query($sql);
               <div class="mb-1 sm:mb-0">
                     <div class="relative">
                           <?php
-                            include('function.php');
-
                             // Ambil nilai posisi yang dipilih dari dropdown menu
                             if(isset($_GET['Recovery_status'])) {
                                 $selectedrecovery_status = $_GET['Recovery_status'];
@@ -133,10 +133,10 @@ $result = $conn->query($sql);
                             onchange="location = this.value;"
                             class="appearance-none h-full rounded-md border-t border-r border-b border-l block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-r focus:bg-white focus:border-gray-500 cursor-pointer">
                             <option value="">Recovery Status</option>
-                            <option value="injury_data.php?Recovery_status=all">Recovery Status</option>
-                            <option value="injury_data.php?Recovery_status=In Recovery">In Recovery</option>
+                            <option value="injury_data.php?Recovery_status=all">All Status</option>
+                            <option value="injury_data.php?Recovery_status=In-Recovery">In-Recovery</option>
                             <option value="injury_data.php?Recovery_status=Recovered">Recovered</option>
-                            <option value="injury_data.php?Recovery_status=Not Recovery">Not Recovery</option>
+                            <option value="injury_data.php?Recovery_status=Not-Recovery">Not-Recovery</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -170,10 +170,6 @@ $result = $conn->query($sql);
               <!-- Tabel Anda -->
               <table class="w-full mt-4 text-left table-auto min-w-max ">
               <thead>
-                <?php
-                    if ($result->num_rows > 0) {
-                      while($row = $result->fetch_assoc()) {
-                  ?>
                 <tr>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
@@ -207,6 +203,10 @@ $result = $conn->query($sql);
                   </th>
                 </tr>
               </thead>
+              <?php 
+                   $result = mysqli_query($conn, $sql);
+                    while ($row = mysqli_fetch_assoc($result)){
+                  ?>
               <tbody>
                   <td class="p-4 border-b border-blue-gray-50">
                     <div class="flex items-center gap-3">
@@ -266,13 +266,11 @@ $result = $conn->query($sql);
                   </td>
                 </tr>
               </tbody>
-              <?php
-                }
-            
-            }
-
-            $conn->close();
-            ?>
+                <?php 
+                  }
+                  mysqli_close($conn);
+      
+                ?>
             </table>
           </div>
           <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">

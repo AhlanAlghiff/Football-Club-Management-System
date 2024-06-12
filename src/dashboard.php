@@ -130,8 +130,8 @@ if (!isset($_SESSION['user_id'])) {
                     // Tampilkan hasilnya
                     echo "<h1 class='flex text-3xl font-bold justify-center'>$totalPlayers</h1>";
                     // Tutup koneksi
-                    mysqli_close($conn);
-                    ?>
+
+                ?>
                     <h1 class="text-lg">All Players</h1>
                 </div>
                 <div class="pr-4 ">
@@ -140,8 +140,21 @@ if (!isset($_SESSION['user_id'])) {
             </div>
             <div class="flex justify-between items-center content-center px-4 py-2 m-4  w-1/3 h-28 bg-green-400 text-white rounded-md drop-shadow-lg shadow-transparent cursor-pointer duration-300 hover:bg-green-600">
                 <div class="ps-4">
-                    <h1 class="flex text-3xl font-bold justify-center">12</h1>
+                <div class="ps-4">
+                <?php
+                    // Query untuk mengambil jumlah pemain dari tabel pemain
+                    $query = "SELECT COUNT(*) AS totalsesi FROM sesi";
+                    // Eksekusi query
+                    $result = mysqli_query($conn, $query);
+                    // Ambil hasil query
+                    $row = mysqli_fetch_assoc($result);
+                    $totalsesi = $row['totalsesi'];
+                    // Tampilkan hasilnya
+                    echo "<h1 class='flex text-3xl font-bold justify-center'>$totalsesi</h1>";
+                    // Tutup koneksi
+                ?>
                     <h1 class="text-lg">Field Schedules</h1>
+                </div>
                 </div>
                 <div class="pr-4">
                     <span class="mdi--soccer-field"></span>
@@ -149,7 +162,18 @@ if (!isset($_SESSION['user_id'])) {
             </div>
             <div class="flex justify-between items-center content-center px-4 py-2 m-4  w-1/3 h-28 bg-red-400 text-white rounded-md drop-shadow-lg shadow-transparent cursor-pointer duration-300 hover:bg-red-600">
                 <div class="ps-4">
-                    <h1 class="flex text-3xl font-bold justify-center">3</h1>
+                <?php
+                    // Query untuk mengambil jumlah pemain dari tabel pemain
+                    $query = "SELECT COUNT(*) AS totalcedera FROM cedera";
+                    // Eksekusi query
+                    $result = mysqli_query($conn, $query);
+                    // Ambil hasil query
+                    $row = mysqli_fetch_assoc($result);
+                    $totalcedera = $row['totalcedera'];
+                    // Tampilkan hasilnya
+                    echo "<h1 class='flex text-3xl font-bold justify-center'>$totalcedera</h1>";
+                    // Tutup koneksi
+                ?>
                     <h1 class="text-lg">Injured Players</h1>
                 </div>
                 <div class="pr-4 ">
@@ -163,13 +187,90 @@ if (!isset($_SESSION['user_id'])) {
                 Latest Schedules
             </h1>
             <button class="flex items-center hover:text-second">
-                <a href="">View All</a>
+                <a href="schedules_data.php">View All</a>
                 <span class="ic--baseline-arrow-right"></span>
             </button>
         </div>
         <div class="flex h-[248px] mt-2 justify-start">
             <div class="m-4 p-4 w-full bg-white rounded-md drop-shadow-lg shadow-transparent">
-                <h1>Kotak Skedul</h1>
+            <table class="w-full mt-4 text-left table-auto min-w-max ">
+              <thead>
+                <tr>
+                  <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                      Date
+                    </p>
+                  </th>
+                  <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                      Time
+                    </p>
+                  </th>
+                  <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                      Session Type
+                    </p>
+                  </th>
+                  <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                      Match Opponent
+                    </p>
+                  </th>
+                  <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                    <p class="block text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                      Location
+                    </p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php
+                    $result = mysqli_query($conn, "SELECT * FROM sesi LIMIT 2;");
+                    while ($row = mysqli_fetch_assoc($result)){
+                  ?>
+                <tr>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <div class="flex items-center gap-3">
+                      <div class="flex flex-row">
+                        <div class="flex flex-col justify-center ml-4">
+                          <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                            <?php echo $row['tanggal']; ?>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <div class="flex flex-col">
+                      <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                      <?php echo $row['waktu']; ?>
+                      </p>
+                    </div>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <div class="w-max">
+                      <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                      <?php echo $row['jenis_sesi']; ?>
+                      </p>
+                    </div>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                    <?php echo $row['lawan']; ?>
+                    </p>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                    <?php echo $row['lokasi']; ?>
+                    </p>
+                  </td>
+                </tr>
+                <?php 
+                    }
+                    mysqli_close($conn);
+
+                  ?>
+              </tbody>
             </div>
         </div>
 

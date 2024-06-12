@@ -124,7 +124,7 @@ if(isset($_POST['submit'])){
                         $select = mysqli_query($conn, "SELECT * FROM sesi WHERE id_sesi = '$id'");
                         while ($row = mysqli_fetch_assoc($select)) {
                     ?>
-                    <form action="update_schedule.php" method="post">
+                    <form action="" method="post">
                         <div class="mb-4">
                             <label for="schedules_date" class="block text-sm font-medium text-gray-700">Date</label>
                             <input type="date" id="schedules_date" value="<?php echo $row['tanggal']?>" name="schedules_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>

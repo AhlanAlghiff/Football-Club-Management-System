@@ -7,13 +7,15 @@
     <title>FC Management System | Schedule</title>
 </head>
 <body>
+
 <?php 
   include('function.php');
 
-  $query = "SELECT * FROM pemain";
+  $query = "SELECT * FROM sesi";
 
-  $result = mysqli_query($conn, $query);
-  ?>
+    $result = mysqli_query($conn, $query);
+
+    ?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
         <div>
             <header class="text-left">
@@ -36,7 +38,7 @@
                         </a>
                     </li>
                     <li class="flex bg-white text-[#878787] w-full h-10 rounded-[10px] my-2 hover:bg-first hover:text-second duration-300">
-                        <a href="schedules_data.php" class=" flex items-center w-full ps-6">
+                        <a href="players_data.php" class=" flex items-center w-full ps-6">
                             <span class="fluent--people-team-16-filled"></span>
                             <span class="ps-4">Players</span>
                         </a>
@@ -110,19 +112,18 @@
                         <?php
                             include('function.php');
 
-                            // Ambil nilai posisi yang dipilih dari dropdown menu
-                            if(isset($_GET['session_type'])) {
-                                $selectedSession_type = $_GET['session_type'];
+                            if(isset($_GET['session'])) {
+                                $selectedsession = $_GET['session'];
                             } else {
-                                // Default, jika tidak ada posisi yang dipilih, tampilkan semua pemain
-                                $selectedSession_type = "all";
+
+                                $selectedsession = "all";
                             }
 
                             // Query SQL untuk mengambil data pemain berdasarkan posisi yang dipilih
-                            if ($selectedSession_type == "all") {
+                            if ($selectedsession == "all") {
                                 $query = "SELECT * FROM sesi";
                             } else {
-                                $query = "SELECT * FROM sesi WHERE jenis_sesi = '$selectedSession_type'";
+                                $query = "SELECT * FROM sesi WHERE jenis_sesi = '$selectedsession'";
                             }
 
                             $result = mysqli_query($conn, $query);
@@ -131,9 +132,9 @@
                             onchange="location = this.value;"
                             class="appearance-none h-full rounded-md border-t border-r border-b border-l block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-r focus:bg-white focus:border-gray-500 cursor-pointer">
                             <option value="">Session Type</option>
-                            <option value="schedules_data.php?session_type=all">Session Type</option>
-                            <option value="schedules_data.php?session_type=Forward">Training</option>
-                            <option value="schedules_data.php?session_type=Midfielder">Match</option>
+                            <option value="schedules_data.php?session=all">Session Type</option>
+                            <option value="schedules_data.php?session=Training">Training</option>
+                            <option value="schedules_data.php?session=Match">Match</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -201,7 +202,7 @@
                 </tr>
               </thead>
               <tbody>
-              <?php
+                    <?php 
                     while ($row = mysqli_fetch_assoc($result)){
                   ?>
                 <tr>
@@ -263,11 +264,11 @@
                   </td>
                 </tr>
                 <?php 
-                    }
-                    mysqli_close($conn);
-
-                  ?>
-              </tbody>
+                  }
+                  mysqli_close($conn);
+      
+                ?>
+                </tbody>
             </table>
           </div>
           <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">

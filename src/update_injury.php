@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
    if(empty($presence_name) || empty($medical_treatment) || empty($injury_info) || empty($medical_treatment) || empty($recovery_status)){
       $message = 'please fill out all';
    }else{
-      $update = "UPDATE cedera SET id_pemain='$presence_name', tanggal_cedera='$injury_date', jenis_cedera='$injury_info'', tindakan_medis='$medical_treatment', status_pemulihan='$recovery_status' WHERE id_cedera = '$id'";
+      $update = "UPDATE `cedera` SET `id_pemain` = '$presence_name', `tanggal_cedera` = '$injury_date', `jenis_cedera` = '$injury_info', `tindakan_medis` = '$medical_treatment', `status_pemulihan` = '$recovery_status' WHERE `cedera`.`id_cedera` = '$id';";
       $upload = mysqli_query($conn, $update);
       if($upload){
          $message = 'Update Injury Player data added successfully!';
@@ -121,22 +121,37 @@ if(isset($_POST['submit'])){
                         Update a Injured Player
                     </p>
                     <form action="" method="post">
+                        <?php
+                            $query = "SELECT c.id_cedera, c.id_pemain, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+                                      FROM cedera c
+                                      JOIN pemain p ON c.id_pemain = p.id_pemain
+                                      WHERE id_cedera = '$id';";
+                            $select = mysqli_query($conn, $query);
+                            while ($row = mysqli_fetch_assoc($select)) {
+                        ?>
                         <div class="mb-4">
                             <label for="presence_name" class="block text-sm font-medium text-gray-700">Player's Name</label>
                             <select id="presence_name" name="presence_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+
+                                <option value="<?php echo $row['id_pemain'] ?>"><?php echo $row['nama_pemain'] ?></option>
+                                <?php }?>
                                 <?php
-                                        include('function.php');
-                                        
-                                        $pemain = mysqli_query($conn, "SELECT * FROM pemain");
-                                        while($row = mysqli_fetch_array($pemain)){
-                                            ?>
+                                    include('function.php');
+
+                                    $pemain = mysqli_query($conn, "SELECT * FROM pemain");
+                                    while($row = mysqli_fetch_array($pemain)){
+                                ?>
                                 <option value="<?php echo $row['id_pemain'] ?>"><?php echo $row['nama'] ?></option>
 
                                 <?php }?>
                             </select>
                         </div>
                         <?php
-                            $select = mysqli_query($conn, "SELECT * FROM cedera WHERE id_cedera = '$id'");
+                            $query = "SELECT c.id_cedera, c.id_pemain, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+                                      FROM cedera c
+                                      JOIN pemain p ON c.id_pemain = p.id_pemain
+                                      WHERE id_cedera = '$id';";
+                            $select = mysqli_query($conn, $query);
                             while ($row = mysqli_fetch_assoc($select)) {
                         ?>
                         <div class="mb-4">
@@ -154,7 +169,7 @@ if(isset($_POST['submit'])){
                         <div class="mb-4">
                             <label for="recovery_status" class="block text-sm font-medium text-gray-700">Recovery Status</label>
                             <select id="recovery_status" name="recovery_status"  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                                <option value="<?php echo $row['tanggal_cedera']?>">Status</option>
+                                <option value="<?php echo $row['status_pemulihan']?>">Status</option>
                                 <option value="In-Recovery">In-Recovery</option>
                                 <option value="Recovered">Recovered</option>
                                 <option value="Not-Recovery">Not-Recovery</option>

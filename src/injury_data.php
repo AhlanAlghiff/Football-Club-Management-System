@@ -11,9 +11,9 @@
 <?php 
   include('function.php');
 
-  $sql = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
-  FROM cedera c
-  JOIN pemain p ON c.id_pemain = p.id_pemain;";
+    $sql = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+          FROM cedera c
+          JOIN pemain p ON c.id_pemain = p.id_pemain;";
 
     $result = mysqli_query($conn, $sql);
 
@@ -122,9 +122,14 @@
 
                             // Query SQL untuk mengambil data cedera berdasarkan posisi yang dipilih
                             if ($selectedrecovery_status == "all") {
-                                $query = "SELECT * FROM cedera";
+                                $query = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+                                          FROM cedera c
+                                          JOIN pemain p ON c.id_pemain = p.id_pemain;";
                             } else {
-                                $query = "SELECT * FROM cedera WHERE jenis_cedera = '$selectedrecovery_status'";
+                                $query = "SELECT c.id_cedera, c.tanggal_cedera, c.jenis_cedera, c.tindakan_medis, c.status_pemulihan, p.nama AS nama_pemain
+                                          FROM cedera c
+                                          JOIN pemain p ON c.id_pemain = p.id_pemain
+                                          WHERE c.status_pemulihan = '$selectedrecovery_status';";
                             }
 
                             $result = mysqli_query($conn, $query);
@@ -204,7 +209,6 @@
                 </tr>
               </thead>
               <?php 
-                   $result = mysqli_query($conn, $sql);
                     while ($row = mysqli_fetch_assoc($result)){
                   ?>
               <tbody>

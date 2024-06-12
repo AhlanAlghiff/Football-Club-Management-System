@@ -116,20 +116,38 @@ if(isset($_POST['submit'])){
                     <p class="block mt-1 text-base antialiased font-normal leading-relaxed text-gray-700 mb-2">
                         Update a Presence Player
                     </p>
-                    <?php
-                        $select = mysqli_query($conn, "SELECT * FROM kehadiran WHERE id_kehadiran = '$id'");
-                        while ($row = mysqli_fetch_assoc($select)) {
-                    ?>
                     <form action="" method="post">
                         <div class="mb-4">
                             <label for="presence_name" class="block text-sm font-medium text-gray-700">Player's Name</label>
                             <select id="presence_name" name="presence_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                                <?php
-                                    include('function.php');
+                            <?php
+                                $query = "SELECT k.id_kehadiran,
+                                              k.id_pemain,
+                                              k.id_sesi,
+                                              p.nama AS nama_pemain,
+                                              s.tanggal,
+                                              k.status_kehadiran,
+                                              k.catatan
+                                          FROM kehadiran k
+                                          JOIN pemain p ON k.id_pemain = p.id_pemain
+                                          JOIN sesi s ON k.id_sesi = s.id_sesi
 
-                                    $pemain = mysqli_query($conn, "SELECT * FROM pemain");
-                                    while($row = mysqli_fetch_array($pemain)){
-                                ?>
+                                WHERE id_kehadiran = '$id';";
+
+                                $select = mysqli_query($conn, $query);
+                                while ($row = mysqli_fetch_assoc($select)) {
+                            ?>
+                                
+                                <option value="<?php echo $row['id_pemain'] ?>"><?php echo $row['nama_pemain'] ?></option>
+
+                            <?php }?>
+
+                            <?php
+                                include('function.php');
+
+                                $pemain = mysqli_query($conn, "SELECT * FROM pemain");
+                                while($row = mysqli_fetch_array($pemain)){
+                            ?>
                                 <option value="<?php echo $row['id_pemain'] ?>"><?php echo $row['nama'] ?></option>
 
                                 <?php }?>
@@ -138,6 +156,27 @@ if(isset($_POST['submit'])){
                         <div class="mb-4">
                             <label for="match_session" class="block text-sm font-medium text-gray-700">Match Date</label>
                             <select id="match_session" name="match_session" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <?php
+                                $query = "SELECT k.id_kehadiran,
+                                              k.id_pemain,
+                                              k.id_sesi,
+                                              p.nama AS nama_pemain,
+                                              s.tanggal,
+                                              k.status_kehadiran,
+                                              k.catatan
+                                          FROM kehadiran k
+                                          JOIN pemain p ON k.id_pemain = p.id_pemain
+                                          JOIN sesi s ON k.id_sesi = s.id_sesi
+
+                                WHERE id_kehadiran = '$id';";
+
+                                $select = mysqli_query($conn, $query);
+                                while ($row = mysqli_fetch_assoc($select)) {
+                            ?>
+                                
+                                <option value="<?php echo $row['id_sesi'] ?>"><?php echo $row['tanggal'] ?></option>
+
+                            <?php }?>
                             <?php
                                     include('function.php');
 
@@ -149,10 +188,27 @@ if(isset($_POST['submit'])){
                                 <?php }?>
                             </select>
                         </div>
+                        <?php
+                                $query = "SELECT k.id_kehadiran,
+                                              k.id_pemain,
+                                              k.id_sesi,
+                                              p.nama AS nama_pemain,
+                                              s.tanggal,
+                                              k.status_kehadiran,
+                                              k.catatan
+                                          FROM kehadiran k
+                                          JOIN pemain p ON k.id_pemain = p.id_pemain
+                                          JOIN sesi s ON k.id_sesi = s.id_sesi
+
+                                WHERE id_kehadiran = '$id';";
+
+                                $select = mysqli_query($conn, $query);
+                                while ($row = mysqli_fetch_assoc($select)) {
+                            ?>
                         <div class="mb-4">
                             <label for="attend_info" class="block text-sm font-medium text-gray-700">Attendance Information</label>
                             <select id="attend_info" name="attend_info" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                                <option value="<?php echo $row['jenis_sesi']?>">Attendace Information</option>
+                                <option value="<?php echo $row['status_kehadiran']?>">Attendace Information</option>
                                 <option value="No-Information">No-Information</option>
                                 <option value="Sickness/Injury">Sickness/Injury</option>
                                 <option value="Permission">Permission</option>
@@ -160,7 +216,7 @@ if(isset($_POST['submit'])){
                         </div>
                         <div class="mb-4">
                             <label for="presence_desc" class="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea id="presence_desc" name="presence_desc" rows="3" placeholder="Insert Description here" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
+                            <textarea id="presence_desc" value="<?php echo $row['catatan']?>" name="presence_desc" rows="3" placeholder="Insert Description here" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
                         </div>
                         <div class="flex items-center justify-between">
                             <button type="submit" name="submit" class="select-none rounded-lg bg-first py-2 px-4 text-center align-middle text-xs font-bold uppercase text-white shadow-md transition-all hover:bg-second focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">

@@ -10,12 +10,12 @@
     <?php
           include 'function.php'; // Menyertakan file koneksi database
                       
-          $sql = "SELECT kehadiran.id_kehadiran ,kehadiran.status_kehadiran, kehadiran.catatan, pemain.nama, sesi.tanggal, sesi.jenis_sesi
+          $query = "SELECT kehadiran.id_kehadiran ,kehadiran.status_kehadiran, kehadiran.catatan, pemain.nama, sesi.tanggal, sesi.jenis_sesi
                   FROM kehadiran
                   JOIN pemain ON kehadiran.id_pemain = pemain.id_pemain
                   JOIN sesi ON kehadiran.id_sesi = sesi.id_sesi";
 
-          $result = $conn->query($sql);
+          $result = mysqli_query($conn, $query);
 
     ?>
     <nav class="sidebar fixed top-0 bottom-0 left-0 p-2 w-[300px] bg-white flex flex-col justify-between font-poppins">
@@ -112,7 +112,6 @@
                       <div class="relative">
                         <?php
                             include('function.php');
-                            $result = $conn->query($sql);
 
                             // Ambil nilai status_kehadiran yang dipilih dari dropdown menu
                             if(isset($_GET['Attendance'])) {
@@ -124,9 +123,16 @@
 
                             // Query SQL untuk mengambil data kehadiran berdasarkan status_kehadiran yang dipilih
                             if ($selectedAttendance == "all") {
-                                $query = "SELECT * FROM kehadiran";
+                                $query = "SELECT kehadiran.id_kehadiran ,kehadiran.status_kehadiran, kehadiran.catatan, pemain.nama, sesi.tanggal, sesi.jenis_sesi
+                                          FROM kehadiran
+                                          JOIN pemain ON kehadiran.id_pemain = pemain.id_pemain
+                                          JOIN sesi ON kehadiran.id_sesi = sesi.id_sesi";
                             } else {
-                                $query = "SELECT * FROM kehadiran WHERE status_kehadiran = '$selectedAttendance'";
+                                $query = "SELECT kehadiran.id_kehadiran ,kehadiran.status_kehadiran, kehadiran.catatan, pemain.nama, sesi.tanggal, sesi.jenis_sesi
+                                          FROM kehadiran
+                                          JOIN pemain ON kehadiran.id_pemain = pemain.id_pemain
+                                          JOIN sesi ON kehadiran.id_sesi = sesi.id_sesi 
+                                          WHERE kehadiran.status_kehadiran = '$selectedAttendance'";
                             }
 
                             $result = mysqli_query($conn, $query);
@@ -136,6 +142,7 @@
                             class="appearance-none h-full rounded-md border-t border-r border-b border-l block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-r focus:bg-white focus:border-gray-500 cursor-pointer">
                             <option value="">Attendance</option>
                             <option value="presence_data.php?Attendance=all">All Attendance</option>
+                            <option value="presence_data.php?Attendance=No-Information">No-Infromation</option>
                             <option value="presence_data.php?Attendance=Permission">Permission</option>
                             <option value="presence_data.php?Attendance=Sickness/Injury">Sickness/Injury</option>
                         </select>
@@ -206,10 +213,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
-                        $result = $conn->query($sql);
-                        while($row = $result->fetch_assoc()) {
-                    ?>
+                <?php 
+                    while ($row = mysqli_fetch_assoc($result)){
+                  ?>
                   <tr>
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex items-center gap-3">
@@ -266,11 +272,10 @@
                     </div>
                   </td>
                   </tr>
-                  <?php
-                }
-
-            $conn->close();
-            ?>
+                  <?php 
+                    }
+                    mysqli_close($conn);
+                ?>
                 </tbody>
               </table>
             </div>
